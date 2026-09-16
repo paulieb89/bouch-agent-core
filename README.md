@@ -75,6 +75,34 @@ Claude-specific packaging. Nothing here needed a provider adapter or turned
 out too project-specific to ship; anything that would have needed either was
 left out (see the exclusions above) rather than shipped weakened.
 
+## Canonical source
+
+Each Skill here has exactly one authoritative copy: the one under this
+package's own `skills/`. An earlier, pre-package draft of the same
+reasoning (a hand-written user-level `harness-extension` skill predating
+this package) has been retired in favor of loading this package instead of
+being kept as a parallel copy. If a Skill with the same purpose as one here
+is ever found living outside this package, retire it rather than
+maintaining it in parallel — a duplicate drifts the moment either copy is
+edited independently, and only one can be canonical.
+
+## Consumer evidence
+
+This package's Skills and reference model were originally distilled from
+the harness domain described in "Relationship to the source evidence"
+below. A second, independent domain — a REAPER-based audio-production
+agent workbench with its own mature `/prime`, domain Skills, MCP
+configuration and evidence conventions — subsequently loaded this package
+as a bounded portability acceptance test. Result: the consuming project's
+own `/prime`, harness and reconnaissance evidence remained authoritative
+throughout; the portable `environment-recon` and `harness-extension`
+Skills were correctly left uninvoked because neither a genuine
+capability-surface drift nor a live production blocker was present, and no
+speculative infrastructure was built. The one real finding wasn't about any
+Skill's content: a pre-package, user-level `harness-extension` copy had
+drifted from this package's version, which is what motivated the
+canonical-source consolidation above.
+
 ## Relationship to the source evidence
 
 This package distils conclusions already reached and evidenced elsewhere;
