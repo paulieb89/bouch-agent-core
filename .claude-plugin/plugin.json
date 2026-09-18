@@ -1,6 +1,6 @@
 {
   "name": "bouch-agent-core",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Portable cross-domain agent-development methodology: harness-extension discipline, environment recon, /prime authoring contract, and evidence-freeze practice. Provider-neutral core with thin Claude packaging — no domain packs, no universal /prime implementation, no workbench framework.",
   "author": {
     "name": "Paul Boucherat"
