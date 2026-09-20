@@ -52,6 +52,37 @@ test result. It is not the same thing as:
 - a narrative summary of what was done, written after the fact with no
   inspection behind it.
 
+Three rules decide whether what you have is strong enough to freeze.
+
+**A recorded observation is not an interpretation.** Keep the two separable
+in the record. What the instrument returned is evidence; what you concluded
+from it is a claim that the reader may disagree with. Do not let inference
+become fact by being written down in the same voice.
+
+**A null result is not trustworthy until the instrument has produced a known
+positive.** A check that has only ever passed has not been shown capable of
+failing. Before a clean run counts as evidence, seed the fault it claims to
+catch and watch it fail. This is the difference between a green suite and a
+verified one: a suite can stay green for as long as it has no assertion
+against a known value.
+
+**When sources conflict, prefer the strongest available:**
+
+    running artifact
+      > installed package / lockfile
+        > version-matched authoritative documentation
+          > other prose
+            > memory
+
+Use the strongest that is practical, not the most convenient. Do not claim
+runtime, integration or user-visible correctness from source inspection
+alone when the real system can be executed or inspected, and when
+correctness depends on version-specific state, read the installed artifact
+rather than what the documentation says it should be. Documentation does not
+prove the installed surface — `environment-recon` covers enumerating that
+surface, and `references/derive-vs-persist.md` covers not copying what it
+can report.
+
 ## Relationship to memory and derive-vs-persist
 
 Frozen evidence is itself an instance of "persist what cannot cheaply be
