@@ -32,7 +32,12 @@ out stale, that is the signal to hand off to recon, not to expand Prime.
    (`--help`, a manifest, a live listing), not from memory or documentation
    alone.
 2. **Separate availability from credibility.** A capability being present is
-   not the same as it being trustworthy. Distinguish:
+   not the same as it being trustworthy. An instrument that has only ever
+   returned a clean result has not been shown able to return a dirty one, so
+   calibrate it against a known positive before trusting its silence — the
+   evidence rules that decide this (known positives, observation versus
+   interpretation, and which source wins when they conflict) are in
+   `skills/evidence-freeze/SKILL.md`. Distinguish:
    - *available and verified* — a real call/run has confirmed it behaves as
      expected;
    - *available but unverified* — present, but never actually exercised;
