@@ -26,15 +26,39 @@ local state.
   portable there.
 - Not a memory store — it documents *where* memory belongs
   (`references/memory-placement.md`) and implements no storage or sync.
-- Not a place for project-local MCP servers, settings, or hooks. Installing
-  this package requires none of those.
+- Not a place for project-local, stateful, or credentialed MCP servers,
+  settings, or hooks. The one MCP server this package's Claude packaging
+  declares (see "Registry connection" below) is a single read-only,
+  user-wide pointer to the already-portable Bouch Registry — it holds no
+  local state, needs no credentials, and every Skill here keeps working
+  with it absent. Nothing here is project-local.
+
+## Registry connection
+
+`.claude-plugin/plugin.json` — the Claude-specific manifest, not the
+portable root one — declares one plugin-provided MCP server: `bouch-registry`,
+a remote HTTP connection to `https://registry.bouch.dev/mcp`. Installing
+this package at user scope (`claude plugin install bouch-agent-core@bouch-plugins
+--scope user`) therefore also connects the Registry in every project, with
+no separate `claude mcp add` step required.
+
+The Registry is a read-only capability-discovery pointer, implemented and
+versioned in its own repository — not part of this package, and this
+package does not depend on it. Every Skill above works standalone if the
+Registry is unreachable or not connected; the Registry only adds the
+ability to look up other Bouch capabilities before treating one as absent.
+The portable root `plugin.json` does not declare this server, so a
+non-Claude client loading the package directly still gets only the
+provider-neutral Skills and references.
 
 ## Layout
 
 ```
 bouch-agent-core/
+├── plugin.json               # portable root manifest (Agent Plugins v1.0.0 spec)
 ├── .claude-plugin/
-│   └── plugin.json          # Claude plugin manifest (the only Claude-specific file)
+│   └── plugin.json          # Claude plugin manifest — the only Claude-specific file;
+│                             # also declares the bouch-registry MCP connection
 ├── skills/
 │   ├── harness-extension/    # extend the harness only when production proves a real gap
 │   ├── environment-recon/    # bounded capability discovery, distinct from /prime
@@ -49,10 +73,13 @@ bouch-agent-core/
 └── README.md
 ```
 
-There is no top-level `plugin.json` outside `.claude-plugin/` — the current
-Claude plugin manifest location is `.claude-plugin/plugin.json` only; an
-earlier sketch of this package's shape assumed a duplicate root manifest,
-which the actual spec does not use.
+Both `plugin.json` (root) and `.claude-plugin/plugin.json` exist and are
+kept identical on their shared identity fields (`name`, `version`,
+`description`, `author`, `keywords`) — `scripts/validate-package.sh` checks
+this on every edit. The root file is the portable Agent Plugins manifest,
+readable directly by a non-Claude client such as Codex; `.claude-plugin/plugin.json`
+is what Claude Code itself reads, and is the only file in this package
+allowed to carry Claude-specific fields such as `mcpServers`.
 
 ## Installing
 

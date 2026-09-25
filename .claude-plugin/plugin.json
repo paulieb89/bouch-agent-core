@@ -1,9 +1,15 @@
 {
   "name": "bouch-agent-core",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Portable cross-domain agent-development methodology: harness-extension discipline, environment recon, /prime authoring contract, and evidence-freeze practice. Provider-neutral core with thin Claude packaging — no domain packs, no universal /prime implementation, no workbench framework.",
   "author": {
     "name": "Paul Boucherat"
   },
-  "keywords": ["agent-harness", "methodology", "skills", "prime", "recon", "evidence-integrity"]
+  "keywords": ["agent-harness", "methodology", "skills", "prime", "recon", "evidence-integrity"],
+  "mcpServers": {
+    "bouch-registry": {
+      "type": "http",
+      "url": "https://registry.bouch.dev/mcp"
+    }
+  }
 }
