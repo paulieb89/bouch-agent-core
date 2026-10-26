@@ -1,0 +1,23 @@
+{
+  "skill_name": "bouch-project-routing",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I am starting a new game project and want to use Bouch across Claude Code and Codex. Where do Core, plugins, knowledge, the Registry, the project repository, and the asset workbench fit, and what should I inspect first?",
+      "expected_output": "A provider-neutral routing answer that starts with the project contract/Prime, uses the Registry for capability discovery, separates project integration from workbench evidence, and does not claim that every provider has arbitrary local filesystem access.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "A clean agent can see my 3D project repository but the Bouch Registry is unreachable. Route the work without inventing a universal harness or assuming that /home/bch paths exist.",
+      "expected_output": "A bounded fallback: use the project's contract and verified local guidance, mark Registry discovery unverified, inspect only relevant project/workbench targets, and avoid machine-specific or universal-harness claims.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "I have a new game asset candidate. Should it go in the project repository, a knowledge package, the Bouch Registry, or the Asset Workbench? Explain where the integration state, reusable guidance, discovery metadata, lineage, and evidence belong.",
+      "expected_output": "A clear separation: integration/runtime state in the project, reusable guidance in knowledge, capability metadata in the Registry, and candidate lineage/evidence in the relevant workbench.",
+      "files": []
+    }
+  ]
+}

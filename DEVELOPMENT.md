@@ -53,7 +53,8 @@ bouch-agent-core/
 │   ├── harness-extension/       # extend the harness only when production proves a real gap
 │   ├── environment-recon/       # bounded capability discovery, distinct from /prime
 │   ├── prime-authoring/         # contract + checklist for a project's own /prime
-│   └── evidence-freeze/         # preserve verified evidence without rewriting history
+│   ├── evidence-freeze/          # preserve verified evidence without rewriting history
+│   └── bouch-project-routing/    # route Core, plugins, knowledge, Registry, and workbenches
 ├── references/
 │   ├── cross-domain-harness-model.md   # the 7-concept model (durable contract, derive-vs-persist, etc.)
 │   ├── prime-contract.md               # frozen semantic contract for a project's own /prime
