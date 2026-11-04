@@ -54,9 +54,11 @@ bouch-agent-core/
 │   ├── environment-recon/       # bounded capability discovery, distinct from /prime
 │   ├── prime-authoring/         # contract + checklist for a project's own /prime
 │   ├── evidence-freeze/          # preserve verified evidence without rewriting history
-│   └── bouch-project-routing/    # route Core, plugins, knowledge, Registry, and workbenches
+│   ├── bouch-project-routing/    # route Core, plugins, knowledge, Registry, and workbenches
+│   └── handoff-authoring/        # author durable handoffs and bounded task packets
 ├── references/
 │   ├── cross-domain-harness-model.md   # the 7-concept model (durable contract, derive-vs-persist, etc.)
+│   ├── cross-provider-operating-contract.md # native-agent coordination boundary
 │   ├── prime-contract.md               # frozen semantic contract for a project's own /prime
 │   ├── derive-vs-persist.md            # rule for what to hand-maintain vs. always derive
 │   ├── memory-placement.md             # which layer (repo/runtime vs. memory vs. contract) a fact belongs in

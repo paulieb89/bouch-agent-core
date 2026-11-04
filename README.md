@@ -11,6 +11,8 @@ local state.
 - Skills that encode a reasoning *procedure* (when to extend a harness, when
   to run recon, how to author a `/prime`, when to freeze evidence) —
   invoked when a task calls for them, not standing processes.
+- A handoff-authoring Skill for durable session transfer, proportional task
+  packets, and evidence-bounded continuation.
 - Reference docs that distil an already-frozen conceptual model, kept
   provider-neutral.
 
@@ -64,9 +66,11 @@ bouch-agent-core/
 │   ├── environment-recon/    # bounded capability discovery, distinct from /prime
 │   ├── prime-authoring/      # contract + checklist for a project's own /prime
 │   ├── evidence-freeze/      # preserve verified evidence without rewriting history
-│   └── bouch-project-routing/ # route Core, plugins, knowledge, Registry, and workbenches
+│   ├── bouch-project-routing/ # route Core, plugins, knowledge, Registry, and workbenches
+│   └── handoff-authoring/     # author durable handoffs and bounded task packets
 ├── references/
 │   ├── cross-domain-harness-model.md
+│   ├── cross-provider-operating-contract.md
 │   ├── prime-contract.md
 │   ├── derive-vs-persist.md
 │   ├── memory-placement.md
