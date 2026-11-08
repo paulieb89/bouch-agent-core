@@ -1,6 +1,6 @@
 ---
 name: evidence-freeze
-description: Practice for preserving authoritative evidence once work has been produced and verified — committing/tagging a known-good state, never rewriting that history, and keeping current routing docs distinct from frozen historical experiment records. Use after a real verify pass succeeds and the result is worth being able to point back to later, not after every commit.
+description: Practice for preserving authoritative evidence once work has been produced and verified — preserving a known-good state (by commit/tag where appropriate and authorised), never rewriting frozen history, and keeping current routing docs distinct from frozen historical experiment records. Use after a real verify pass succeeds and the result is worth being able to point back to later, not after every commit.
 ---
 
 # Evidence freeze
@@ -19,12 +19,17 @@ that without turning it into git ceremony for its own sake.
 2. **Preserve the authoritative evidence.** Identify what actually
    constitutes the evidence of correctness for this domain — a rendered
    artifact, a measurement file, a fixture output, a qualified dataset — and
-   make sure it is committed, not left as an untracked or regeneratable
+   make sure it is kept durably, not left as an untracked or regeneratable
    intermediate.
-3. **Commit/tag the known state.** Create a commit (and a tag, if the state
-   is worth being able to name and return to later) that captures this
-   specific verified state. The tag name should say what was qualified, not
-   just when.
+3. **Pin the known state where it helps.** No commit is required for every
+   freeze; what matters is that the evidence is durable and identifiable. Where
+   a commit (and a tag, if the state is worth naming and returning to later)
+   is the right way to pin it, make one if existing authorisation allows: the
+   user's instructions, applicable project instructions and native permissions
+   govern, and routine commits they already permit are fine without a separate
+   request. The tag name should say what was qualified, not just when. Where
+   committing is not authorised, leave the evidence in place and report its
+   state. Project-specific freeze requirements always stand.
 4. **Do not rewrite that history.** Once evidence has been frozen, treat it
    as append-only. Fix problems forward with a new commit/candidate, not by
    amending or force-pushing over a tagged evidence state — the whole point
@@ -52,7 +57,8 @@ test result. It is not the same thing as:
 - a narrative summary of what was done, written after the fact with no
   inspection behind it.
 
-Three rules decide whether what you have is strong enough to freeze.
+Three rules decide whether what you have is strong enough to freeze; apply
+each in proportion to the claim being made and the task.
 
 **A recorded observation is not an interpretation.** Keep the two separable
 in the record. What the instrument returned is evidence; what you concluded
@@ -61,10 +67,15 @@ become fact by being written down in the same voice.
 
 **A null result is not trustworthy until the instrument has produced a known
 positive.** A check that has only ever passed has not been shown capable of
-failing. Before a clean run counts as evidence, seed the fault it claims to
-catch and watch it fail. This is the difference between a green suite and a
-verified one: a suite can stay green for as long as it has no assertion
-against a known value.
+failing. When a clean run is offered as evidence that something is absent or
+correct, and the claim is strong or the check is untested, calibrate it: seed
+the fault it claims to catch and watch it fail, on a copy, fixture, or test
+double rather than on production or shared state. Not every check needs this;
+a modest claim from a well-established check does not merit a seeding exercise
+just because one is possible. Where calibration is warranted but cannot be
+done safely, record the result as uncalibrated rather than as proof of
+absence. This is the difference between a green suite and a verified one: a
+suite can stay green for as long as it has no assertion against a known value.
 
 **When sources conflict, prefer the strongest available:**
 
@@ -96,7 +107,9 @@ repository/runtime evidence, Prime, memory, and raw history.
 
 ## What this is not
 
-- Not a mandate to tag every commit. Freeze evidence when a result is worth
+- Not a mandate to commit or tag for every freeze, and not a bar on routine
+  commits already authorised by the user or project instructions. Do not
+  tag every commit. Freeze evidence when a result is worth
   being able to point back to later — a qualified baseline, a comparison
   point, a delivered artifact — not as routine housekeeping.
 - Not permission to skip `--no-verify`/force-push style shortcuts to "clean

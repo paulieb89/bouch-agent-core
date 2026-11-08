@@ -34,25 +34,34 @@ out stale, that is the signal to hand off to recon, not to expand Prime.
 2. **Separate availability from credibility.** A capability being present is
    not the same as it being trustworthy. An instrument that has only ever
    returned a clean result has not been shown able to return a dirty one, so
-   calibrate it against a known positive before trusting its silence — the
-   evidence rules that decide this (known positives, observation versus
-   interpretation, and which source wins when they conflict) are in
-   `skills/evidence-freeze/SKILL.md`. Distinguish:
+   calibrate it against a known positive before trusting its silence when the
+   conclusion depends on that silence and the stakes warrant it. Keep the
+   calibration proportionate: prefer a harmless fixture or read-only check, and
+   do not seed faults in production or shared systems. When calibration is
+   warranted but not safely possible, label the result uncalibrated rather than
+   dropping the caveat. The evidence rules that decide
+   this (known positives, observation versus interpretation, and which source
+   wins when they conflict) are in `skills/evidence-freeze/SKILL.md`.
+   Distinguish:
    - *available and verified* — a real call/run has confirmed it behaves as
      expected;
    - *available but unverified* — present, but never actually exercised;
-   - *not available* — genuinely absent, confirmed by a live attempt, not
-     just an unread doc.
+   - *not available* — genuinely absent, confirmed by a live attempt where one
+     is safe and cheap, not just an unread doc.
    Record this distinction positively (what was checked and what it showed),
    not as a hand-maintained inventory that will silently go stale.
 3. **Reuse before composing, compose before building.** Prefer an existing
    capability used as-is; then an existing capability composed differently;
    only then consider extension (hand off to `harness-extension` — recon
    identifies the gap, it does not close it).
-4. **Identify genuine gaps precisely.** A gap is genuine only after a live
-   attempt fails, not after source inspection alone suggests absence. State
-   the gap narrowly — what specific action is blocked — rather than as a
-   general capability wishlist.
+4. **Identify genuine gaps precisely.** Prefer a live attempt to confirm a
+   gap, since source inspection alone can mislead. Probe proportionately and
+   within existing authorisation: a harmless read-only probe using credentials
+   the task already authorises, or with ordinary incidental cost, needs no
+   fresh permission. Ask first only for probes with meaningful side effects,
+   unusual cost, or credentials beyond what is authorised; if no suitable probe
+   exists, report the gap as inferred. State the gap narrowly — what specific
+   action is blocked — rather than as a general capability wishlist.
 5. **Stop at a bounded result.** Recon produces a compact answer to the
    question that motivated it: what's here, what's credible, what's missing
    for the task at hand. It does not become a permanent, ever-growing

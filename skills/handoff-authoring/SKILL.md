@@ -88,4 +88,3 @@ Before handing the document to the next agent, check:
   evidence.
 - The closing instructions tell the next agent what to preserve, verify, and
   report back.
-

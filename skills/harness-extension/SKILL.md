@@ -15,9 +15,14 @@ framework nobody asked for.
 1. **Production objective.** Start from the real task, not a hypothetical one.
 2. **Real blocker.** The task cannot proceed — not "this would be nicer."
 3. **Prove the gap before writing code.** Source inspection can suggest a
-   capability is missing; only a live attempt (a real call, a real run)
-   confirms it. Enumerate the actual surface (API, integration, protocol,
-   CLI) before assuming absence — don't guess.
+   capability is missing; a live attempt (a real call, a real run) confirms
+   it. Enumerate the actual surface (API, integration, protocol, CLI) before
+   assuming absence — don't guess. Keep the probe proportionate and within existing
+   authorisation: harmless probes, including read-only use of already
+   authorised credentials, need no fresh permission. If a live attempt would
+   have meaningful side effects, unusual cost, or need credentials beyond what
+   is authorised, use a harmless equivalent or ask, and label the gap as
+   inferred if it cannot be confirmed.
 4. **Check native/existing capabilities first.** Prefer a native primitive,
    an existing tool composed differently, or a thin adapter over new
    infrastructure. Build only after those are ruled out.
@@ -25,9 +30,10 @@ framework nobody asked for.
    pattern in the codebase (same validation style, same result shape, same
    undo/safety conventions) rather than inventing a new one. Resist scope
    creep toward a general-purpose mechanism.
-6. **Verify through the real client/runtime**, not just unit tests or source
-   inspection. Re-confirm the effect independently (read it back), not just
-   from the call's own success echo.
+6. **Verify through the real client/runtime** where feasible, not just unit
+   tests or source inspection. Re-confirm the effect independently (read it
+   back) rather than relying on the call's own success echo. If the real
+   runtime cannot safely be exercised, say what was and was not verified.
 7. **Return to the production objective immediately.** The extension exists
    to unblock the task, not to become the new focus.
 8. **Stop at the next capability gap that isn't required for the current
