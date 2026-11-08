@@ -18,7 +18,8 @@ reference here is classified `PORTABLE AS-IS`: provider-neutral content,
 with `.claude-plugin/plugin.json` — the only Claude-specific file — as the
 sole exception; it also declares this package's one MCP server, a read-only
 pointer to the Bouch Registry (see README.md's "Registry connection"
-section). The portable root `plugin.json` and every Skill stay
+section). The same server is also declared in the portable root `mcp.json`
+(Agent Plugins v1.0.0). The portable root `plugin.json` and every Skill stay
 provider-neutral regardless.
 
 ## Validating changes
@@ -30,24 +31,30 @@ scripts/validate-package.sh
 ```
 
 This checks (in order): `plugin.json` conforms to the Agent Plugins v1.0.0
-schema, each `skills/*/` validates against the Agent Skills spec (via
-`agentskills/agentskills`, pinned to a specific commit — bump the
-`AGENTSKILLS_REF` pin deliberately, not silently), `claude plugin validate
+schema, `mcp.json` conforms to the Agent Plugins v1.0.0 MCP schema and its
+`bouch-registry` URL matches the Claude manifest's, each `skills/*/`
+validates against the Agent Skills spec (via `agentskills/agentskills`,
+pinned to a specific commit — bump the `AGENTSKILLS_REF` pin deliberately,
+not silently), `claude plugin validate
 --strict` passes, the root `plugin.json` and `.claude-plugin/plugin.json`
 have identical identity fields (`name`, `version`, `description`, `author`,
 `keywords`), every `skills/*/` has a `SKILL.md`, and no stray
 `plugin.json`/`marketplace.json` files exist outside the two expected
 locations. Requires `claude`, `uvx`, and `python3` on PATH.
 
-This script does **not** perform a real install/discovery trial against a
-live client (e.g. `codex plugin marketplace add`) — that's a separate
-release/acceptance test to run before a release, not on every edit.
+This script does **not** connect to the Registry endpoint, and does not check
+that any non-Claude client actually loads `mcp.json`; it validates the file
+against the schema only. It also does not perform a real install/discovery
+trial against a live client (e.g. `codex plugin marketplace add`) — that's a
+separate release/acceptance test to run before a release, not on every
+edit.
 
 ## Structure and the dual-manifest requirement
 
 ```
 bouch-agent-core/
 ├── plugin.json                  # portable root manifest (Agent Plugins spec)
+├── mcp.json                     # portable MCP config (streamable-http bouch-registry)
 ├── .claude-plugin/plugin.json   # Claude plugin manifest — the only Claude-specific file
 ├── skills/
 │   ├── harness-extension/       # extend the harness only when production proves a real gap
@@ -76,6 +83,13 @@ together — `validate-package.sh` will fail the "Portable <-> Claude identity
 consistency" check otherwise. Do not add a `.codex-plugin/` directory or any
 other compatibility-fallback manifest; Codex reads the portable root manifest
 directly.
+
+**MCP is declared twice on purpose.** `.claude-plugin/plugin.json` keeps
+`mcpServers.bouch-registry` with `"type": "http"` (what Claude Code reads);
+root `mcp.json` declares the same URL as `"type": "streamable-http"` (the
+Agent Plugins v1.0.0 transport name). Change the URL in both together —
+`validate-package.sh` checks they match. Skills must never depend on the
+server being reachable.
 
 ## Working in this repo
 

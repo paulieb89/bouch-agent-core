@@ -31,33 +31,49 @@ local state.
 - Not a place for project-local, stateful, or credentialed MCP servers,
   settings, or hooks. The one MCP server this package's Claude packaging
   declares (see "Registry connection" below) is a single read-only,
-  user-wide pointer to the already-portable Bouch Registry — it holds no
-  local state, needs no credentials, and every Skill here keeps working
-  with it absent. Nothing here is project-local.
+  user-wide pointer to the already-portable Bouch Registry (mirrored in the
+  portable `mcp.json`) — it holds no local state, needs no credentials, and
+  every Skill here keeps working with it absent. Nothing here is
+  project-local.
 
 ## Registry connection
 
-`.claude-plugin/plugin.json` — the Claude-specific manifest, not the
-portable root one — declares one plugin-provided MCP server: `bouch-registry`,
-a remote HTTP connection to `https://registry.bouch.dev/mcp`. Installing
-this package at user scope (`claude plugin install bouch-agent-core@bouch-plugins
---scope user`) therefore also connects the Registry in every project, with
-no separate `claude mcp add` step required.
+The package declares one MCP server, `bouch-registry`, pointing at
+`https://registry.bouch.dev/mcp`, in two places that are deliberately kept
+separate:
+
+- **Claude** — `.claude-plugin/plugin.json` declares it under `mcpServers`
+  as `"type": "http"`. This is the connection Claude Code uses; installing
+  this package at user scope (`claude plugin install bouch-agent-core@bouch-plugins
+  --scope user`) therefore also connects the Registry in every project, with
+  no separate `claude mcp add` step required. It is unchanged by the
+  portable config below.
+- **Portable (Agent Plugins v1.0.0)** — the root `mcp.json` declares the same
+  server as `"type": "streamable-http"`, following the Agent Plugins MCP
+  schema (`https://agent-plugins.org/schemas/1.0.0/mcp.schema.json`), for
+  non-Claude clients that load the package directly. The root `plugin.json`
+  does not reference it explicitly; clients are expected to look for it at
+  the package root.
 
 The Registry is a read-only capability-discovery pointer, implemented and
 versioned in its own repository — not part of this package, and this
 package does not depend on it. Every Skill above works standalone if the
 Registry is unreachable or not connected; the Registry only adds the
 ability to look up other Bouch capabilities before treating one as absent.
-The portable root `plugin.json` does not declare this server, so a
-non-Claude client loading the package directly still gets only the
-provider-neutral Skills and references.
+
+Verification: `scripts/validate-package.sh` checks `mcp.json` against the
+published schema and that its URL matches the Claude manifest; it does not
+connect to the Registry. An isolated Codex installation loaded the portable
+configuration and retrieved a Registry record. A Claude Code session loaded
+the plugin connection and retrieved the same record. ChatGPT Work has not
+been tested with this connection.
 
 ## Layout
 
 ```
 bouch-agent-core/
 ├── plugin.json               # portable root manifest (Agent Plugins v1.0.0 spec)
+├── mcp.json                  # portable MCP config (Agent Plugins v1.0.0): bouch-registry
 ├── .claude-plugin/
 │   └── plugin.json          # Claude plugin manifest — the only Claude-specific file;
 │                             # also declares the bouch-registry MCP connection
@@ -83,13 +99,15 @@ kept identical on their shared identity fields (`name`, `version`,
 `description`, `author`, `keywords`) — `scripts/validate-package.sh` checks
 this on every edit. The root file is the portable Agent Plugins manifest,
 readable directly by a non-Claude client such as Codex; `.claude-plugin/plugin.json`
-is what Claude Code itself reads, and is the only file in this package
-allowed to carry Claude-specific fields such as `mcpServers`.
+is what Claude Code itself reads, and is the only manifest in this package
+allowed to carry Claude-specific fields such as `mcpServers`. `mcp.json` is
+the portable counterpart of that MCP declaration, not a manifest.
 
 ## Installing
 
-This package needs no marketplace registration, no MCP server, no settings
-changes, and no hooks. Load it directly for a session:
+This package needs no marketplace registration, no settings changes, and no
+hooks, and the Skills work without any MCP server. Load it directly for a
+session:
 
 ```
 claude --plugin-dir /path/to/bouch-agent-core

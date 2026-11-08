@@ -11,6 +11,7 @@ cd "$REPO_ROOT"
 # checked against (agentskills/agentskills). Bump deliberately, not silently.
 AGENTSKILLS_REF="69ef37e9424c0a7ea9dd2293b559e43ec8176379"
 AGENT_PLUGINS_SCHEMA_URL="https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"
+AGENT_PLUGINS_MCP_SCHEMA_URL="https://agent-plugins.org/schemas/1.0.0/mcp.schema.json"
 
 FAILED=0
 fail() { echo "  ✘ $1"; FAILED=1; }
@@ -28,6 +29,32 @@ else
     pass "plugin.json conforms to Agent Plugins v1.0.0"
   else
     fail "plugin.json does not conform to Agent Plugins v1.0.0 (see /tmp/validate-package.agent-plugins.log)"
+  fi
+fi
+
+echo "== Agent Plugins portable MCP schema =="
+if [ ! -f mcp.json ]; then
+  fail "mcp.json missing at repo root"
+else
+  if uvx check-jsonschema --schemafile "$AGENT_PLUGINS_MCP_SCHEMA_URL" mcp.json >/tmp/validate-package.agent-plugins-mcp.log 2>&1; then
+    pass "mcp.json conforms to Agent Plugins v1.0.0 MCP schema"
+  else
+    fail "mcp.json does not conform to Agent Plugins v1.0.0 MCP schema (see /tmp/validate-package.agent-plugins-mcp.log)"
+  fi
+  python3 - <<'PYEOF'
+import json, sys
+p = json.load(open("mcp.json"))["mcpServers"].get("bouch-registry")
+c = json.load(open(".claude-plugin/plugin.json")).get("mcpServers", {}).get("bouch-registry")
+ok = (p and c and p.get("url") == c.get("url")
+      and p.get("type") == "streamable-http" and c.get("type") == "http")
+if not ok:
+    print("bouch-registry endpoint/type diverged between mcp.json and .claude-plugin/plugin.json")
+    sys.exit(1)
+PYEOF
+  if [ $? -eq 0 ]; then
+    pass "bouch-registry URL matches the Claude manifest connection"
+  else
+    fail "bouch-registry in mcp.json diverged from .claude-plugin/plugin.json"
   fi
 fi
 
