@@ -48,6 +48,7 @@ Route a fact to the smallest authoritative layer that can keep it true:
 | What reusable capability exists? | Registry discovery and the capability's declared entrypoints |
 | What is the reusable procedure? | A portable Skill or plugin package |
 | What durable domain guidance should be reused? | The relevant knowledge package |
+| What did past sessions learn that is not yet promoted? | The project's observation log (`OBSERVATIONS.md` or its convention); `OPEN` entries are provisional — see the `observation-log` Skill |
 | What is true in this project now? | The project contract, Prime, repository state, and live checks |
 | How does this project call an external tool or runtime? | The project-local adapter/configuration |
 | Which candidate was used, changed, or rejected? | The relevant domain workbench and its lineage/evidence records |
@@ -64,8 +65,9 @@ knowledge package.
 Use this bounded sequence:
 
 1. Identify the project root and read its `AGENTS.md`, `CLAUDE.md`, Prime, or
-   equivalent project contract. Treat those files as the source for current
-   paths, commands, adapters, and local conventions.
+   equivalent project contract, plus the observation log if the project
+   keeps one. Treat those files as the source for current paths, commands,
+   adapters, and local conventions.
 2. Where the task needs a skill, MCP server, or specialist package you do not
    already have, consult the Registry/MCP if it is connected: it is a curated
    source of what exists and of each entry's declared entrypoints. A Registry

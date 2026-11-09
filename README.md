@@ -84,6 +84,7 @@ bouch-agent-core/
 │   ├── evidence-freeze/      # preserve verified evidence without rewriting history
 │   ├── bouch-project-routing/ # route Core, plugins, knowledge, Registry, and workbenches
 │   └── handoff-authoring/     # author durable handoffs and bounded task packets
+│   └── observation-log/        # capture and promote reusable session lessons
 ├── references/
 │   ├── cross-domain-harness-model.md
 │   ├── cross-provider-operating-contract.md

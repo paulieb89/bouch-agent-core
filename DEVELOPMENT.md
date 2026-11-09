@@ -63,6 +63,7 @@ bouch-agent-core/
 │   ├── evidence-freeze/          # preserve verified evidence without rewriting history
 │   ├── bouch-project-routing/    # route Core, plugins, knowledge, Registry, and workbenches
 │   └── handoff-authoring/        # author durable handoffs and bounded task packets
+│   └── observation-log/           # stage reusable lessons, review for promotion
 ├── references/
 │   ├── cross-domain-harness-model.md   # the 7-concept model (durable contract, derive-vs-persist, etc.)
 │   ├── cross-provider-operating-contract.md # native-agent coordination boundary
