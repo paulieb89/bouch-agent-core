@@ -36,7 +36,7 @@ Capture on these triggers, and only these:
 
 Do not capture derivable state — git status, current file contents, tool
 inventories, whether a service is up right now. Derive those live
-(`references/derive-vs-persist.md` covers the rule; `memory-placement.md`
+(`references/derive-vs-persist.md` covers the rule; `references/memory-placement.md`
 covers which layer a fact belongs in). Do not capture secrets, credentials,
 or raw transcript material — point at evidence, never copy it.
 
@@ -44,21 +44,28 @@ or raw transcript material — point at evidence, never copy it.
 
 1. Prefer the project's established convention. If one exists, append there
    and stop. Otherwise create `OBSERVATIONS.md` at the project root using
-   `references/TEMPLATE-observations.md`.
+   the template bundled with this skill (`references/TEMPLATE-observations.md`
+   inside this skill's own directory).
 2. Append one entry per observation, in the template's field order: id,
    status `OPEN`, target (the Skill, reference, or area it applies to), type,
    what was observed, an evidence pointer, and the proposed rule.
 3. Keep the entry short — a few lines, written so a fresh agent can act on
    it without the originating conversation. Write the observation, not the
-   narrative of discovering it.
-4. Resume the task. Capturing is a pause of seconds, not a phase of work.
+   narrative of discovering it. Leave `resolution` unset until review.
+4. When a log is first created in a project, note its location in the
+   project's durable contract (`CLAUDE.md`/`AGENTS.md`, Prime, or the
+   project's equivalent) so agents that never load this skill still check
+   it. One line is enough.
+5. Resume the task. Capturing is a pause of seconds, not a phase of work.
 
 ## Applying open observations
 
 Before relying on a Skill, reference, or documented convention in this
 project, check the log for `OPEN` entries tagged to it. An `OPEN` entry is
 provisional: it records what happened once, with its evidence — follow it
-where it looks sound, and note the entry when it proves or fails in use.
+where it looks sound; when it proves or fails in use, record the
+outcome on the entry itself (a line under `observed:` or `evidence:`),
+so review can act on it.
 An `OPEN` entry never outranks live evidence; when they conflict, evidence
 wins and the entry should be marked for review rather than followed.
 
@@ -87,8 +94,10 @@ proposed as a change there, not copied in.
 When asked to harvest session history — for example to seed a new log —
 the same four triggers apply retrospectively. Claude Code and Codex keep
 durable session transcripts; a read-only inspector such as `sessinspect`
-answers bounded questions over them (what tools ran, what failed, which
-files changed) without loading raw transcripts into context.
+answers bounded questions over Claude Code transcripts (what tools ran,
+what failed, which files changed) without loading raw transcripts into
+context. For other providers, read the provider's own session store by
+path rather than assuming the inspector covers it.
 
 1. Scope the harvest: which sessions, which project, which period — a
    bounded slice, not "everything ever".
