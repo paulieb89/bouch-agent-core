@@ -1,0 +1,35 @@
+{
+  "skill_name": "observation-log",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "The user just corrected me for the second time this session \u2014 the project uses pnpm, not npm, and this is not written down anywhere. What do I do with that lesson?",
+      "expected_output": "Append a short OPEN entry to the project's OBSERVATIONS.md (or its established convention), typed as a correction, targeting package-management guidance, with an evidence pointer and a one-line proposed rule \u2014 then resume the task. No new store, no edits to skill files, no derivable state captured.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "A skill told me to run `tool x --flag` but that flag no longer exists and the task failed. I found the working invocation after twenty minutes of digging.",
+      "expected_output": "Record a conflict-type OPEN observation noting the stale instruction, the verified working invocation, and an evidence pointer \u2014 so the source can be corrected rather than worked around again. If fixing the doc itself is already authorised, fix it directly instead of only logging.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Review the observation log. There are six OPEN entries: two corrections about test commands, one conflict against a README that was fixed last week, one workaround that three tasks now use, and two stale.",
+      "expected_output": "For each entry: check it is still true, propose a promotion target as a draft (skill gotcha, doc fix, durable contract, or dismissal with reason), and mark PROMOTED with the landing spot or DISMISSED/STALE with the reason. Do not apply skill edits without user approval; do not delete entries.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Session is ending. Should I write the git branch, uncommitted file list, and a summary of everything I did into OBSERVATIONS.md before handing off?",
+      "expected_output": "No. Branch and working-tree state are derivable and belong in a handoff if needed, not the observation log. The log holds reusable lessons (corrections, expensive findings, stale guidance, repeated workarounds), not project state or session narrative. Empty is a correct result after honest work.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "Seed the observation log from my last month of agent sessions on this project instead of waiting for new lessons.",
+      "expected_output": "Scope a bounded harvest (which sessions, which period), query for signal (corrections, error\u2192fix sequences, reverts, repeated commands) via a read-only inspector or targeted transcript reads rather than ingesting everything, draft each candidate as an OPEN entry with a session:line provenance citation marked as extracted, dedupe against existing entries, and present them for review \u2014 no automatic promotion.",
+      "files": []
+    }
+  ]
+}
