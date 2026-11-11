@@ -13,6 +13,10 @@ local state.
   invoked when a task calls for them, not standing processes.
 - A handoff-authoring Skill for durable session transfer, proportional task
   packets, and evidence-bounded continuation.
+- An observation-log Skill that stages session lessons and promotes the
+  durable ones into project knowledge.
+- A project-routing Skill that orients agents across Bouch Core, plugin
+  packages, durable knowledge, the Registry, and domain workbenches.
 - Reference docs that distil an already-frozen conceptual model, kept
   provider-neutral.
 
@@ -86,37 +90,36 @@ bouch-agent-core/
 │   ├── handoff-authoring/     # author durable handoffs and bounded task packets
 │   └── observation-log/        # capture and promote reusable session lessons
 ├── references/
-│   ├── cross-domain-harness-model.md
-│   ├── cross-provider-operating-contract.md
-│   ├── prime-contract.md
-│   ├── derive-vs-persist.md
-│   ├── memory-placement.md
-│   └── candidate-evidence-pattern.md
+│   ├── cross-domain-harness-model.md        # the 7-concept model (durable contract, derive-vs-persist, etc.)
+│   ├── cross-provider-operating-contract.md # native-agent coordination boundary
+│   ├── prime-contract.md                    # frozen semantic contract for a project's own /prime
+│   ├── derive-vs-persist.md                 # what to hand-maintain vs. always derive
+│   ├── memory-placement.md                  # which layer a fact belongs in (repo/runtime, memory, contract)
+│   └── candidate-evidence-pattern.md        # candidate/evidence lineage pattern (no code reproduced)
+├── scripts/validate-package.sh  # package qualification checks (see AGENTS.md)
+├── AGENTS.md                 # guidance for agents and contributors working on this repo
 └── README.md
 ```
 
-Both `plugin.json` (root) and `.claude-plugin/plugin.json` exist and are
-kept identical on their shared identity fields (`name`, `version`,
-`description`, `author`, `keywords`) — `scripts/validate-package.sh` checks
-this on every edit. The root file is the portable Agent Plugins manifest,
-readable directly by a non-Claude client such as Codex; `.claude-plugin/plugin.json`
-is what Claude Code itself reads, and is the only manifest in this package
-allowed to carry Claude-specific fields such as `mcpServers`. `mcp.json` is
-the portable counterpart of that MCP declaration, not a manifest.
+The root `plugin.json` is the portable Agent Plugins manifest, read directly
+by non-Claude clients such as Codex; `.claude-plugin/plugin.json` is what
+Claude Code reads. The two share identical identity fields — see
+[`AGENTS.md`](AGENTS.md) for the invariants and how they are checked.
 
 ## Installing
 
-This package needs no marketplace registration, no settings changes, and no
-hooks, and the Skills work without any MCP server. Load it directly for a
-session:
+This package needs no settings changes and no hooks, and the Skills work
+without any MCP server. Load it directly for a session:
 
 ```
 claude --plugin-dir /path/to/bouch-agent-core
 ```
 
-or copy/symlink it under a project's own plugin/skills directory per your
-Claude Code setup. Skills become discoverable via normal progressive
-disclosure; nothing here registers globally on install.
+or install it from a marketplace at user scope (see "Registry connection"
+above), or copy/symlink it under a project's own plugin/skills directory.
+Skills become discoverable via normal progressive disclosure. Only a
+user-scope install makes the package — and its Registry connection —
+available in every project.
 
 ## Portability classification
 
@@ -126,45 +129,15 @@ Claude-specific packaging. Nothing here needed a provider adapter or turned
 out too project-specific to ship; anything that would have needed either was
 left out (see the exclusions above) rather than shipped weakened.
 
-## Canonical source
-
-Each Skill here has exactly one authoritative copy: the one under this
-package's own `skills/`. An earlier, pre-package draft of the same
-reasoning (a hand-written user-level `harness-extension` skill predating
-this package) has been retired in favor of loading this package instead of
-being kept as a parallel copy. If a Skill with the same purpose as one here
-is ever found living outside this package, retire it rather than
-maintaining it in parallel — a duplicate drifts the moment either copy is
-edited independently, and only one can be canonical.
-
-## Consumer evidence
-
-This package's Skills and reference model were originally distilled from
-the harness domain described in "Relationship to the source evidence"
-below. A second, independent domain — a REAPER-based audio-production
-agent workbench with its own mature `/prime`, domain Skills, MCP
-configuration and evidence conventions — subsequently loaded this package
-as a bounded portability acceptance test. Result: the consuming project's
-own `/prime`, harness and reconnaissance evidence remained authoritative
-throughout; the portable `environment-recon` and `harness-extension`
-Skills were correctly left uninvoked because neither a genuine
-capability-surface drift nor a live production blocker was present, and no
-speculative infrastructure was built. The one real finding wasn't about any
-Skill's content: a pre-package, user-level `harness-extension` copy had
-drifted from this package's version, which is what motivated the
-canonical-source consolidation above.
-
-## Relationship to the source evidence
-
-This package distils conclusions already reached and evidenced elsewhere;
-it does not restate the underlying audits. For the full origin evidence,
-see (project-local, not part of this package):
-
-- the cross-domain harness model and Prime contract research behind
-  `references/cross-domain-harness-model.md` and `references/prime-contract.md`;
-- the qualified candidate-lineage workbench behind
-  `references/candidate-evidence-pattern.md`.
-
 If this package's guidance and that evidence ever disagree, the evidence
 wins — this package should be updated to match, not treated as
 independently authoritative.
+
+## Contributing
+
+See [`AGENTS.md`](AGENTS.md) for the validation workflow, cross-file
+invariants, and conventions.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
