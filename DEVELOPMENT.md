@@ -1,11 +1,5 @@
 # Development — bouch-agent-core
 
-Maintainer notes. Not shipped as plugin context — Claude Code doesn't load
-a plugin's root `CLAUDE.md` as project context when the plugin is installed
-into someone else's project (only a skill's content loads, on invocation),
-so this file is named to stay out of that path. It's for anyone developing
-this repository itself.
-
 ## What this repo is
 
 `bouch-agent-core` is a portable, provider-neutral **Claude plugin**: a
