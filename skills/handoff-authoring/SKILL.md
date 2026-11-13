@@ -69,16 +69,22 @@ control already records needs no handoff entry.
   append a new dated section to carry the change.
 - Stay within the template's length budget. When the handoff exceeds it,
   compact it (below) rather than letting it grow.
-- Record `as_of` (date and commit) and list every in-flight path —
-  uncommitted, untracked, or awaiting review — with what it is. Anything in
-  the working tree that the handoff does not list is, by definition, not
-  handed off.
+- Record `as_of` (date and the commit the content was checked against) and
+  annotate known in-flight paths — uncommitted, untracked, or awaiting
+  review — with what they are. The list is what the writer knew, not a
+  registry: a fresh agent derives the actual set from `git status`, and a
+  path the handoff does not mention is drift to report, not proof of
+  absence.
 - Record what was observed and how it was observed. A source link alone does
   not prove that the current runtime or artifact was checked.
 - Record every consequential action in the handoff's approvals-and-spend
   section: date, action, the approval it relied on and where that approval
   was given, cost, and evidence path. If no approval can be located, write
   `approval not recorded` — never omit the line or infer an approval.
+  Keep the ledger to the open period: when a unit closes or the period
+  rolls, roll its rows into the unit manifest or the dated archive and
+  derive totals rather than re-stating them. The table is current state,
+  not a log.
 - Put approval gates before the action they govern. Do not treat a handoff as
   retroactive authorisation to deploy, publish, send, delete, spend, or modify
   a live system. A standing authorisation (for example a per-unit budget for
@@ -95,7 +101,9 @@ The project contract (`CLAUDE.md`, `AGENTS.md`, or equivalent) holds stable
 rules and boundaries; the handoff holds current state. Do not copy current
 direction, balances, figures, or dated status into the contract — they drift
 from the handoff and from the source. The contract needs one line pointing at
-the handoff. When you find current state in the contract, move it.
+the handoff. When you find current state in the contract, propose moving it
+to the handoff — the contract is the project's own file, so edit it only
+with authorisation; state the proposal and let the owner decide.
 
 ## Recurring production
 
@@ -110,10 +118,12 @@ Do not narrate each unit's production in the project handoff.
 ## Reading a handoff
 
 Treat a handoff as a dated claim, not current truth. Before relying on it,
-compare it with the repository: commits after its `as_of` commit, and
-working-tree paths it does not list as in flight, mean it is stale. Report
-the drift and update the handoff before building on it. A project's own
-`/prime` is the natural place for this check (see `prime-authoring`).
+compare it with the repository: commits after its `as_of` commit that touch
+more than the handoff file itself
+(`git log <as_of>..HEAD -- . ':!HANDOFF.md'`), and working-tree paths it
+does not mention as in flight, mean it is stale. Report the drift and update
+the handoff before building on it. A project's own `/prime` is the natural
+place for this check (see `prime-authoring`).
 
 ## Compacting a journal-style handoff
 
@@ -128,7 +138,9 @@ When an existing handoff has grown by appending dated sections:
 3. Keep decisions still in force; reduce superseded ones to one line each.
 4. Route reusable lessons found in the old text to the observation log
    (`observation-log`), not into the new handoff.
-5. Move any current state found in the project contract into the handoff.
+5. Flag any current state found in the project contract and propose moving
+   it to the handoff — do not edit the contract unasked (see the contract
+   boundary above).
 
 ## Evidence and continuity boundaries
 
@@ -150,7 +162,9 @@ Before handing the document to the next agent, check:
 - A fresh agent can identify the objective and the first safe action.
 - It describes the present without reading history; it is within the length
   budget.
-- `as_of` is current and every in-flight path in the working tree is listed.
+- `as_of` names the commit the content was checked against, and known
+  in-flight paths are annotated (the full set is derived from `git status`,
+  not asserted by the list).
 - Every consequential action has a ledger line with an approval reference or
   `approval not recorded`.
 - Every source-of-truth path exists or is clearly marked as an external

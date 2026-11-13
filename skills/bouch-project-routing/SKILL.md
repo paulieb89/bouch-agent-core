@@ -49,7 +49,7 @@ Route a fact to the smallest authoritative layer that can keep it true:
 | What is the reusable procedure? | A portable Skill or plugin package |
 | What durable domain guidance should be reused? | The relevant knowledge package |
 | What did past sessions learn that is not yet promoted? | The project's observation log (`OBSERVATIONS.md` or its convention); `OPEN` entries are provisional — see the `observation-log` Skill |
-| What is true in this project now? | The project contract, Prime, repository state, and live checks |
+| What is true in this project now? | The project's current-state handoff if it keeps one (a dated claim — verify against repository state; see `handoff-authoring`), Prime, repository state, and live checks |
 | How does this project call an external tool or runtime? | The project-local adapter/configuration |
 | Which candidate was used, changed, or rejected? | The relevant domain workbench and its lineage/evidence records |
 | What has actually been verified? | Evidence attached to the artifact or workbench, with provenance |
