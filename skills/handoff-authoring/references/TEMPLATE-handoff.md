@@ -16,7 +16,9 @@ link from the project handoff.
 ```markdown
 ---
 repo: <repository name>
-as_of: <YYYY-MM-DD> <short commit sha>
+as_of: <YYYY-MM-DD> <sha of the commit this content was checked against —
+      freshness is judged against later commits EXCLUDING handoff-file
+      changes, e.g. `git log <as_of>..HEAD -- . ':!HANDOFF.md'`>
 archive: <path to frozen prior handoff text, or "git history">
 sessions: <recent native session ids worth resuming, or none>
 ---
@@ -34,7 +36,8 @@ next safe action.>
 
 ## In flight
 
-Every uncommitted, untracked, or awaiting-review path, with what it is.
+Known uncommitted, untracked, or awaiting-review paths — `git status` is
+the check; this list is the writer's claim, not a registry.
 
 - `<path>` — <what it is; who must review or decide what>
 - none
@@ -49,9 +52,12 @@ Every uncommitted, untracked, or awaiting-review path, with what it is.
 Standing authorisations:
 
 - <scope> — limit <amount or count>, granted by <who> on <date> via
-  <where recorded>, expires <date or condition>; consumed <amount>
+  <where recorded>, expires <date or condition>; consumed <derived from
+  the open-period ledger rows>
 
-Consequential actions (paid, live, publishing, destructive):
+Consequential actions (paid, live, publishing, destructive). Keep the
+current period's rows only — roll closed rows into the unit manifest or
+the dated archive; derive totals, don't re-state them:
 
 | Date | Action | Approval relied on | Cost | Evidence |
 |------|--------|--------------------|------|----------|

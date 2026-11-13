@@ -20,6 +20,13 @@ boundary between the layers.
 3. **Prime** — not a storage layer at all, but the place that *cites* a
    small number of already-established facts from layers 2 and 4, plus a
    cheap pulse-check against layer 1. See `prime-contract.md`.
+3a. **Project handoff** — a project-local *current-state* document
+   (one `HANDOFF.md` per project, rewritten in place; see the
+   `handoff-authoring` Skill). Sits between layers 2 and 4: persisted like
+   the contract but current like the repository. It holds what layer 1
+   cannot (decisions, approvals, the writer's intent) and what layer 2
+   must not (dated status). Always a dated claim verified against layer 1 —
+   never outrank it.
 4. **Memory** — cross-session, cross-project semantic knowledge that
    layers 1–3 cannot hold because it isn't project-local, isn't cheaply
    re-derivable, or is about the working relationship rather than the

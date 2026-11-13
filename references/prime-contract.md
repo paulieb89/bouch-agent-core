@@ -33,6 +33,12 @@ The boundary that makes Prime cheap and trustworthy at once:
 - **Pulse-check**: cheaply verify that a known surface is actually live
   right now (e.g. one health check against a running service) —
   proportionate to the cost of being wrong, not a full capability sweep.
+- **Handoff-as-claim check**: if the project keeps a current-state
+  handoff, verify it is fresh before treating it as state — `as_of` is
+  the commit it was checked against, so compare `git log <as_of>..HEAD`
+  excluding the handoff file itself, and diff its in-flight annotations
+  against `git status`. An unaccounted commit or path is drift to report,
+  not truth to inherit.
 - **Drift → Recon**: if a pulse check fails or a cited fact turns out
   stale, that is a signal to hand off to recon, not to silently expand
   Prime into doing recon's job inline.
