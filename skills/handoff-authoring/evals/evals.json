@@ -1,0 +1,35 @@
+{
+  "skill_name": "handoff-authoring",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Our HANDOFF.md is 37 KB with 21 dated sections appended over a week; the current state is in the last two. CLAUDE.md also repeats the current direction and an account usage figure. Tidy this up so the next agent can start quickly.",
+      "expected_output": "Compact rather than append: preserve the old text once unedited (git history or a named dated archive file), write a fresh Shape A current-state handoff within about 100 lines with as_of, In flight, Decisions in force (superseded ones reduced to one line), Approvals and spend, Open questions and Next-session instructions; re-verify each carried-forward fact against the repo and demote unverified ones to open questions; route reusable lessons to the observation log; move current state out of CLAUDE.md and leave a one-line pointer to the handoff.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I just ran one paid video generation ($0.40) for a comparison test and saved the output in an untracked folder. I'm going to carry on with the next comparison. Anything to do first?",
+      "expected_output": "Yes: a paid action is an update trigger. Update the current-state handoff now, not at session end: add the untracked folder to In flight with what it is, add a ledger line with date, action, the approval relied on and where it was given (or `approval not recorded` if none can be located — never inferred), cost and evidence path. Do not treat the handoff as authorising the next paid call.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Start of session. HANDOFF.md says the next step is reviewing a draft and that no paid calls were made. git status shows an untracked folder containing a generated video newer than the handoff. Should I follow the handoff's next step?",
+      "expected_output": "Treat the handoff as a dated claim: the untracked folder is not listed as in flight, so the handoff is stale. Inspect the folder, report the drift (including the apparent paid call contradicting 'no paid calls'), and update the handoff before building on it. Do not assume the untracked work was approved.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "We're moving from an experimental repo to a weekly release of short episodes. How should the handoff work in the production repo?",
+      "expected_output": "Each episode keeps its own manifest in its directory (stage, sources, settings, costs, review outcome, release status). The project HANDOFF.md is a bounded current-state document that indexes units by stage and holds only cross-cutting state: cadence, standing authorisations with scope, limit, grantor, date and expiry plus amount consumed, blockers and the next unit's first action. Publishing and spend still need approval gates; a standing authorisation is recorded, not inferred. The experimental repo gets a closing handoff pointing at the production repo.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "I fixed a typo in a helper and committed it. Should I update HANDOFF.md?",
+      "expected_output": "No. Routine progress already recorded by source control is not an update trigger. Update only on a consequential action, a changed decision, a reviewable artifact, or ending a session with uncommitted work.",
+      "files": []
+    }
+  ]
+}

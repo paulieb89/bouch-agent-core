@@ -2,58 +2,84 @@
 
 Three shapes. Pick based on stakes and risk profile, not habit.
 
-## Shape A — full handoff
+## Shape A — current-state handoff
 
-Use for a real decision, investigation, amendment, or multi-session thread.
+The project's standing continuity document. Rewrite sections in place so the
+document always describes the present; source control keeps the history.
+Length budget: about 100 lines. Past that, compact it (see the Skill) rather
+than append.
+
+A separately-scoped long-running thread may use this shape in its own file,
+with `status: active | landed | superseded` added to the frontmatter and a
+link from the project handoff.
 
 ```markdown
 ---
-status: active | landed | superseded
 repo: <repository name>
-date: <YYYY-MM-DD>
-supersedes: <prior file, or "none">
-sessions: <sessions or agents that contributed>
+as_of: <YYYY-MM-DD> <short commit sha>
+archive: <path to frozen prior handoff text, or "git history">
+sessions: <recent native session ids worth resuming, or none>
 ---
 
-# Handoff: <title>
+# Handoff: <project>
 
-## Purpose and scope
+## Now
 
-<The outcome this handoff transfers and what it does not cover.>
+<Two or three sentences: the objective, where it stands, and the single
+next safe action.>
 
-## Source of truth
-
-- `<path or URL>` — <what it establishes and why it is authoritative>
-- `<path or commit>` — <what was actually observed>
-
-## Verified facts
+## Verified state
 
 - <fact> — observed by <test, inspection, runtime check, or artifact>
 
-## Decisions
+## In flight
 
-- <decision> — <reason and date>
-- **AMENDED:** <decision changed> — <what changed and why>
-- **INVESTIGATED:** <question checked> — <result and evidence>
+Every uncommitted, untracked, or awaiting-review path, with what it is.
 
-## Open items
+- `<path>` — <what it is; who must review or decide what>
+- none
 
-1. <Concrete next question or action, ready for the next session.>
-2. <Concrete next question or action.>
+## Decisions in force
+
+- <decision> — <reason, date>
+- superseded <date>: <old> → <new> (<reason>)
+
+## Approvals and spend
+
+Standing authorisations:
+
+- <scope> — limit <amount or count>, granted by <who> on <date> via
+  <where recorded>, expires <date or condition>; consumed <amount>
+
+Consequential actions (paid, live, publishing, destructive):
+
+| Date | Action | Approval relied on | Cost | Evidence |
+|------|--------|--------------------|------|----------|
+| <date> | <action> | <reference, or `approval not recorded`> | <amount> | `<path>` |
+
+## Open questions
+
+1. <question, and who answers it>
+
+## Boundaries
+
+- <do-not-touch, live, paid, or publishing gates that apply right now>
 
 ## Next-session instructions
 
-<Tell a fresh agent what to read first, what to preserve, what to verify,
-and what it must not assume.>
+<What to read first, what to preserve, what to verify before relying on
+this document, and what must not be assumed.>
+```
 
-## Evidence and completion report
+For recurring production, add a units index and keep each unit's detail in
+the unit's own manifest:
 
-- Files changed: <paths, or none>
-- Tests/probes run: <commands and results, or not run>
-- Evidence: <paths or links>
-- Blockers: <none or concrete blockers>
+```markdown
+## Units
 
-Closed <YYYY-MM-DD> — <one-line outcome, when complete>
+| Unit | Stage | Manifest | Blocker |
+|------|-------|----------|---------|
+| <id> | brief / script / production / review / approved / released | `<path>` | <none or blocker> |
 ```
 
 ## Shape B — lightweight kickoff
@@ -186,13 +212,15 @@ touches: live | paid | production | hard-boundaries
   distinction matters.
 - Tick checkboxes when the condition becomes true, not only at session end.
 - Approval gates are written before work starts and are not expanded
-  retroactively.
+  retroactively. A consequential action with no locatable approval is
+  recorded as `approval not recorded`, never omitted.
+- Current state lives in the handoff, not in the project contract.
 - A verified platform or repository claim belongs in the project's evidence or
   field-notes system when one exists; a small backlog item belongs in the
   project's backlog; this document is for continuity and bounded transfer.
 
 ## Routing
 
-- Real decision, investigation, or multi-session thread: Shape A.
+- Project continuity, or a separately-scoped multi-session thread: Shape A.
 - Small diagnosed fix: Shape B.
 - Live, paid, production, publishing, or hard boundaries: Shape C.

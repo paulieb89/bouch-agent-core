@@ -11,8 +11,9 @@ local state.
 - Skills that encode a reasoning *procedure* (when to extend a harness, when
   to run recon, how to author a `/prime`, when to freeze evidence) —
   invoked when a task calls for them, not standing processes.
-- A handoff-authoring Skill for durable session transfer, proportional task
-  packets, and evidence-bounded continuation.
+- A handoff-authoring Skill for a bounded current-state handoff rewritten in
+  place, event-triggered updates, an approvals-and-spend ledger, proportional
+  task packets, and evidence-bounded continuation.
 - An observation-log Skill that stages session lessons and promotes the
   durable ones into project knowledge.
 - A project-routing Skill that orients agents across Bouch Core, plugin

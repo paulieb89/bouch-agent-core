@@ -35,6 +35,11 @@ When writing or reviewing a project's `/prime`, check it against each line:
 - [ ] **Pulse-checks, doesn't sweep.** At most a cheap, proportionate check
       that a known surface is actually live right now (one health check
       against a running service) — not a full capability audit.
+- [ ] **Checks handoff freshness, if the project keeps one.** Compare the
+      handoff's `as_of` commit with `HEAD` and its in-flight list with the
+      working tree; report commits or paths it does not account for as
+      drift, rather than presenting the handoff as current state (see
+      `handoff-authoring`).
 - [ ] **Hands off drift to recon.** If a pulse check fails or a cited fact
       turns out stale, that's a signal to invoke `environment-recon`, not to
       silently absorb recon's job into Prime.
