@@ -18,6 +18,9 @@ local state.
   durable ones into project knowledge.
 - A project-routing Skill that orients agents across Bouch Core, plugin
   packages, durable knowledge, the Registry, and domain workbenches.
+- A capability-act Skill that performs the discovery → installed hop:
+  resolves a Registry record to per-harness install steps, applies them
+  with consent, and verifies the result by read-back.
 - Reference docs that distil an already-frozen conceptual model, kept
   provider-neutral.
 
@@ -88,6 +91,7 @@ bouch-agent-core/
 │   ├── prime-authoring/      # contract + checklist for a project's own /prime
 │   ├── evidence-freeze/      # preserve verified evidence without rewriting history
 │   ├── bouch-project-routing/ # route Core, plugins, knowledge, Registry, and workbenches
+│   ├── capability-act/         # resolve a Registry record to install steps and apply with consent
 │   ├── handoff-authoring/     # author durable handoffs and bounded task packets
 │   └── observation-log/        # capture and promote reusable session lessons
 ├── references/
