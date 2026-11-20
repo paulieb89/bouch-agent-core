@@ -1,10 +1,20 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "bouch-agent-core",
-  "version": "0.4.1",
-  "description": "Portable cross-domain agent-development methodology: harness-extension discipline, environment recon, /prime authoring, evidence-freeze, durable handoff practice, project routing, observation-log lesson capture, and consent-gated capability install. Provider-neutral core with thin Claude packaging — no domain packs, no universal /prime implementation, no workbench framework.",
+  "version": "0.5.0",
+  "description": "Portable Skills for Bouch projects: project routing, capability recon and extension, evidence freezing, /prime authoring, handoffs, observation logs and consent-gated capability install. Provider-neutral, with thin Claude packaging.",
   "author": {
     "name": "Paul Boucherat"
   },
-  "keywords": ["agent-harness", "methodology", "skills", "prime", "recon", "evidence-integrity", "handoff", "continuity", "routing", "observation-log", "capability-act"]
+  "keywords": [
+    "agent-harness",
+    "skills",
+    "routing",
+    "recon",
+    "evidence-integrity",
+    "prime",
+    "handoff",
+    "observation-log",
+    "capability-act"
+  ]
 }

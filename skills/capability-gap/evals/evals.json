@@ -1,0 +1,23 @@
+{
+  "skill_name": "capability-gap",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I've just opened an unfamiliar repo that uses several MCP servers and a deploy CLI. Before I start a task that depends on the deploy CLI's dry-run check, work out what's actually available and how far to trust it.",
+      "expected_output": "Enumerates from live sources (--help, MCP listing, config) rather than docs; classifies capabilities as verified, unverified or absent; checks that the dry-run can actually report a failure using a known-bad fixture (not production) or labels it uncalibrated; reports counts and shapes, not full listings; does not write an inventory file.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "The task needs to update a field on a media channel, and reading the source it looks like no tool exposes it. Should I write a new MCP tool?",
+      "expected_output": "Proves the gap with a harmless live attempt before building; checks existing tools and compositions first; if building, copies an existing sibling tool's shape; verifies through the real client with a read-back; returns to the task and records any further gap without chasing it.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "It's the start of a normal session on a project I worked on yesterday. Run recon so we know where things stand.",
+      "expected_output": "Declines a full recon at routine session start and points to the project's /prime (derive state, cite routing facts, cheap pulse check); runs recon only if a pulse check fails or a cited fact proves stale.",
+      "files": []
+    }
+  ]
+}
