@@ -15,11 +15,5 @@
     "handoff",
     "observation-log",
     "capability-act"
-  ],
-  "mcpServers": {
-    "bouch-registry": {
-      "type": "http",
-      "url": "https://registry.bouch.dev/mcp"
-    }
-  }
+  ]
 }

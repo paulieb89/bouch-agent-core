@@ -35,7 +35,7 @@ Not on every commit; git records routine progress.
 - **Approvals and spend:** every consequential action gets a ledger line — date, action, the approval relied on and where it was given, cost, evidence path. If no approval can be found, write `approval not recorded`; never infer one. Keep only the open period; roll closed rows into the unit manifest or archive and derive totals.
 - Approval gates go before the action. A handoff never authorises deploying, publishing, sending, deleting, spending or touching a live system after the fact. Record standing authorisations with scope, limit, grantor, date and expiry; each action cites one.
 - When the work is done, close the loop explicitly. Don't delete the handoff.
-- Don't create or update memory stores, Registry records or session databases as part of writing a handoff.
+- Don't create or update memory stores, catalogue records or session databases as part of writing a handoff.
 
 ## Contract vs handoff
 

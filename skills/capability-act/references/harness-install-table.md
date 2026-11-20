@@ -32,8 +32,8 @@ Notes:
 ## mcp-server
 
 Bouch `mcp-server` records carry no declared remote endpoint — the route
-is the record's own contract entrypoint (read it via
-`read_capability_entrypoint` or `bouch://source/<id>/<path>`). A record
+is the record's own contract entrypoint (read it in the source
+repository). A record
 may be a local stdio server that builds from source — in that case the
 "install" is a clone plus its own setup instructions.
 

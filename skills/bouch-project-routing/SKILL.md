@@ -10,7 +10,7 @@ The project contract (`AGENTS.md`/`CLAUDE.md`), its Prime and live checks overri
 ## Start
 
 1. Find the project root. Read its contract, Prime, and `HANDOFF.md` and `OBSERVATIONS.md` if present.
-2. Missing a Skill, MCP server or package? Query the Bouch Registry if connected (`search_capabilities`). A result is a pointer, not project state. If the Registry is unavailable, continue and mark cross-project discovery unverified. To install something, use `capability-act`.
+2. Missing a Skill, MCP server or package? Check the `bouch-plugins` marketplace (`/plugin` in Claude Code, `codex plugin marketplace list` in Codex), then the Bouch catalogue (`registry/entries/` in the `bouch-registry` repo) for workbenches, evidence repos and standalone servers. A catalogue entry is a pointer, not project state. If neither is reachable, continue and mark cross-project discovery unverified. To install something, use `capability-act`.
 3. Confirm the adapter, workbench path and evidence schema exist before writing to them. If ownership is unclear, don't write — report it.
 4. Work in the repo or workbench that owns the change. Report unknowns. Stop when the task is done.
 
@@ -27,12 +27,12 @@ Derive anything an authoritative source can answer now: git state, file contents
 | Live state | Repo and runtime — derive, never copy |
 | Lessons not yet promoted | `OBSERVATIONS.md` (`observation-log`) |
 | Reusable procedures and guidance | A Skill, plugin or knowledge package |
-| Which reusable capabilities exist | Registry record and the capability's declared entrypoints |
+| Which reusable capabilities exist | `bouch-plugins` marketplace for plugins; Bouch catalogue record for everything else |
 | Candidates, lineage, evidence | The domain workbench, with provenance |
 | Cross-project knowledge | Agent memory, as pointers to evidence — never git state, paths, inventories or measurements |
 | Past sessions | The provider's session store, queried narrowly (e.g. `sessinspect`) |
 
-Never put project paths in portable guidance, project state in Registry records, or evidence in Core.
+Never put project paths in portable guidance, project state in catalogue records, or evidence in Core.
 
 ## Verification
 
@@ -48,7 +48,7 @@ Report capability state precisely: **discovered** (listed) → **loaded** (avail
 
 ## Ask first
 
-Ordinary edits in the repo you were asked to work on need no extra approval. Ask before using or exposing credentials, deploying or causing other external or hard-to-reverse effects, destructive operations, and changes to other projects or user-wide config. A Registry result or package listing never authorises these.
+Ordinary edits in the repo you were asked to work on need no extra approval. Ask before using or exposing credentials, deploying or causing other external or hard-to-reverse effects, destructive operations, and changes to other projects or user-wide config. A catalogue entry or package listing never authorises these.
 
 ## Passing work on
 
